@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .square {
+            width: 80px;
+            height: 80px;
+        }
+
+        .red {
+            position:relative;
+            left:0;
+            background-color: #F44336;
+            margin-bottom: 40px;
+            transition:left 2s linear;
+        }
+
+        .blue {
+            position:relative;
+            background-color: #2196F3;
+            margin-top: 30px;
+            transition:transform 2s linear;
+        }
+        .red:hover{
+            left:300px;
+        }
+        .blue:hover{
+            transform:translate(300px);
+        }
+    </style>
+</head>
+<body>
+<div class="square red"></div>
+<div class="square blue"></div>
+
+<!--
+1、margin 上下吃进问题：
+    垂直方向上的外边距相遇时将会发生折叠。这意味着如果一个元素的下边距遇到了另一个元素的上边距，那么二者中较大的一     个将被留下。
+
+2、利用盒子模型布局：
+    盒子模型自然有其存在的理由。float 和 inline-block 当然也可以工作，但它们都是样式化文档的基础工具，而不是整个网
+    站。从某种意义来说， Flexbox 是为更容易更精确创建我们想要的布局而设计的。
+    Flexbox 模型提供的一系列属性给了开发者更大的灵活性，而且你一旦熟悉了它们，那创建任何响应式布局都是轻而易举的事。浏览器对 Flexbox 的支持也已经接近完美，所以已经没有什么理由能够阻止你使用 Flexbox 了。
+    .container {
+        display: flex;
+        /* Don't forget to add prefixes for Safari */
+        display: -webkit-flex;
+    }
+
+3、执行 CSS 重置：解决各浏览器的默认行为
+ * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+4、为所有元素使用 Border-box：为所有元素设置 border-box 将有利于样式化，而且你在也不用做乏味的数学运算了。
+   =>content-box(default) - 当我们为元素设置了宽度和高度，但那只是内容的尺寸。所有的 padding 和 border                  都在不包含在内容当中，也就是在内容的外部。举例来说，如果我们有一个 div它的宽度为 100px， padding 为 10px,
+     那么它的实际宽度为 120px。
+   =>border-box - padding和 border 被包含在 宽度和高度当中。 如果一个 div 的宽度为 100px ，而被设置了 box-sizing:
+     border-box， 那么它的宽度将始终是 100px， 无论你添加多少 padding 和 border 。
+
+5、图像作为背景：
+    当你为自己的站点添加图片时，尤其是你想做响应式设计的时候，利用一个 div 标签并为其设置 background    属性，而不是使用 <img> 元素。
+    似乎额外的工作并没有起到任何作用，但实际上这更利于你对图片设置样式，保持它们原有的尺寸或者根据比例变化，这需要借助 background-size，background-size 还有一些其它的属性。
+
+6、更好的 Table 边框：
+HTML 中的 table 没什么意思。它们非常古怪，难以设计成响应式的，而且很难与整体风格一致。比如说，你想为 table 和其中的元素添加上边框，你可能会得到下面的结果。
+正如你所见到的，它有很多重复的边框而且看起来不是很好，有一个非常快速且简单的去除双边框的方法，就是将 border-collapse: collapse 添加到 table.
+
+7、更好的注释方式：
+对于 CSS 中的一些比较大的模块，比如主要模块或者媒体查询，使用风格化的注释并且在其后留下一些空行。
+/*---------------
+    #Slideshow
+---------------*/
+    .slideshow { }
+css没有这种 //
+
+8、命名连接：
+当 class 或者 id 不止一个单词的时候，需要使用 - 符号连接，  CSS 对大小写不敏感，所以骆驼命名法不是一个好的选择。很久以前，下划线不被支持所以破折号成为了默认约定。
+    /*  Do     */
+    .footer-column-left { }
+
+    /*  Don't  */
+    .footerColumnLeft { }
+
+    .footer_column_left { }
+
+9、不要重复设置：
+CSS 的许多属性值都是从 DOM 树中的上一级继承下来的，因此命名为层叠样式表。
+
+10、CSS 动画与变换：
+不要通过直接更改元素的宽度和高度去动画元素，或者是更改 left/right/top/bottom。最好的办法是使用 transform() 属性因为它提供了更加圆滑的过渡效果而且可以让你的意图在阅读代码时更加易于理解。
+    .ball {
+        left: 50px;
+        transition: 0.4s ease-out;
+    }
+
+    /* Not Cool*/
+    .ball.slide-out {
+        left: 500px;
+    }
+
+    /* Cool*/
+    .ball.slide-out {
+        transform: translateX(450px);
+    }
+
+11、不要 DIY, 使用库：
+CSS 社区非常的庞大而且不断出现新的库。 库被提供于各种用途，从小片段到完善的框架，用于构建响应式程序，而且它们当中大部分都是开源的。
+所以下次当你碰到 CSS 问题的时候，在你想自己动手去解决问题的时候，最好先去 Github 或者 CodePen 找找是否已经存在可用的解决方案。
+
+12、保持选择器的特指度低（优先级）
+
+
+13、不要使用 !important：
+很认真的告诉你，不要使用 !important。 即时的一个快速修复在将来可能导致大量的重写。相反，找出你 CSS 选择器不工作的原因，并且尝试去修复它。
+只有在一种情景中使用 !important 是可以接受的，那就是你想覆盖那些在 HTML 中定义的行内样式。而且书写行内样式也是一种非常糟糕的方式，建议停止使用。
+
+14、使用 text-transform：
+如果出于某种目的你将一组文本都设置成大写，可以在 HTML 中正常书写文本，然后利用 CSS 转换其大小写。 它们看起来都是一样的，但是如果不在上下文中，你的内容将更有意义。
+    <div class="movie-poster">Star Wars: The Force Awakens</div>
+    .movie-poster { text-transform: uppercase;}
+
+15、 Em， Rem 和 Pixel：
+em - 1 em 的大小与直接父元素的字体大小有关。 通常用于媒体查询，em 对响应式设计而言是非常棒的 ，但是将每个元素的 em 值转换为 px 的比例是非常难以计算的，因为你可能要在 DOM 树上逐级跟踪元素。
+rem - 以 <html> 元素中的 font-size 为基准， rem 将比例化页面中的标题和段落变得很容易。保持 <html> 中默认的 font-size 并且为其它的元素设置 rem 是一种非常棒的方法。
+px - 像素是最精确的控制方式，但是在 响应式设计中它并不友好，因为它不会随屏幕大小变化而自动缩放。它们是可靠的，易于理解的，并且在值和实际结果之间呈现出良好的视觉联系。
+
+16、在大项目中使用预处理器：
+你可能已经听说过它们了 - Sass, Less, PostCSS, Stylus 。预处理器是 CSS 发展的下一阶段。 它们提供的功能诸如变量， CSS 函数，选择器嵌套以及其它一些非常酷的东西。这使得 CSS 代码非常易于管理，尤其在大项目中。
+    $accent-color: #2196F3;
+
+    a {
+        padding: 10px 15px;
+        background-color: $accent-color;
+    }
+    a:hover {
+        background-color: darken($accent-color,10%);
+    }
+
+17、Autoprefixers：
+为各个浏览器添加前缀算得上是书写 CSS 代码最恼人的问题了。它们不一致，你永远无法精确的你需要哪一个，而且如果你真的去一个个适配并将它们都放到样式表中，你会发现这是一场噩梦。
+感谢上天，有很多工具可以自动的帮你实现这一过程，甚至可以让你指定你需要支持的浏览器 ：
+    在线工具： Autoprefixer
+    文本编辑器插件 - Sublime Text, Atom
+    库 - Autoprefixer
+
+18、在项目中使用精简代码：
+为了提高网站或app的页面加载速度我们需要总是使用精简代码 . 代码的精简版本会移除掉空白和重复的部分,这样会削减文件的大小. 当然,这样的话你的 CSS 代码将会变得非常难以阅读,所以最好总是提供一个 .min 的精简版本和一个常规的发展版本.
+    在线工具 - CSS Minifier, CSS Compressor
+    文本编辑插件 - Sublime Text, Atom
+    库 - Minfiy , CSSO 和 CSSNano
+
+19、Can I Use：
+不同的浏览器仍然存在着很多不一致的兼容性问题, 利用 caniuse 或者其它类似的服务检测你正在使用的属性是否被广泛支持, 是否需要添加前缀, 或者说是否会在某平台下出现 bug .
+仅仅检测是否仍然是不够的, 你仍然需要测试布局是否会无缘无故的崩溃. 充分了解用户经常使用的浏览器也会提供很大的帮助, 因此你可以看到好的支持是非常关键的.
+
+20、Validate：
+验证 CSS 代码可能没有验证 HTML 或者 JavaScript 代码重要, 但是在一个 CSS 验证器上运行你的代码还是有帮助的, 它会提示你是否书写了错误或者比较糟糕的代码, 甚至会给出一些比较中肯的建议帮助你改进代码.
+    工具：
+    在线工具 - W3 Validator, CSS Lint
+    文本编辑器插件 - Sublime Text, Atom
+    库 - stylelint (Node.js, PostCSS), css-validator (Node.js)
+
+-->
+</body>
+</html>

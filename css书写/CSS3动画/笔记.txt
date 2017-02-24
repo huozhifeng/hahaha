@@ -1,0 +1,63 @@
+优雅降级：优先保证高版本浏览器上的效果，低版本能看就行。
+渐进增强(先保证低版本浏览器，再去高版本浏览器上增加一些css3效果和额外的js)
+
+css3动画部分；
+前端部分的动画：JavaScript动画(PC)和css3动画(移动端和高版本浏览器)
+css3动画模块：transition动画，transform变形，animation动画
+
+   1、 transition动画：
+       语法：通过改变css属性值，实现起始值到结束值之间平滑过渡的效果，css属性值发生变化时，transition动画才会被触发
+       =>transition-property:设置css属性(默认值是all)
+         transition-duration:动画执行的时间
+         transition-timing-function:ease-in/ease-out/linear()
+         transition-delay:动画延迟的时间(默认是0)
+         transition:width 1s ease-in,height 1s ease-out;
+   2、 transform变形
+          =>  2D变形的方法
+             transform:rotate(45deg) 正->顺时针 负 逆时针
+             transform :scale(0.2) 默认值是1,大于1是放大,小于1缩小;  两个参数（x轴，y轴）
+             transform:skew(15deg,0)  水平方向 正->左倾斜  负 ->右倾斜  垂直方向 正->向下倾斜  负 ->向上倾斜
+             transform : translate(100px);
+             以上四个方法可以合在一起写,但是注意顺序
+             默认的基准点都是中心点 rotate/ scale/skew可以改变基准点 ,translate的基准点只能是终点
+             transform-origin:center;（支持数值）top/center/bottom/left/center/right
+             【rotate/skew会改变x轴.y轴方向 translate是会影响当前元素变形的基准点】
+          =>  3D变形方法
+             transform:rotateX(45deg);上下翻转  正:翻开电脑   负:合上电脑
+             transform:rotateY(45deg); 左右翻   正:往手右边翻 负:往手左边翻
+             transform:rotateZ(45deg); 平面转   正:顺时针     负:逆时针
+             transform:translateZ(100px) 正:视觉上物体会看到方大,负的值会看到缩小
+             transform:translate3d(x,y,z);x轴方向偏移,y轴方法偏移 ,z轴方向偏移
+             transform-style:preserve-3d  元素是在3d空间里展示
+             perspective:2000px 视距  隔着多远去看这个物体
+   3、 animation动画
+             语法
+            animation-name :关键帧动画名
+            animation-duration:动画执行的时间
+            animation-timing-function :动画类型 (默认值)
+            animation-delay:动画延迟时间 默认值:0
+            animation-iteration-count:动画执行的次数 1次或者infinite(无限循环次)
+            animation-play-state:running/paused 动画是否运行 默认值(running)
+            animation-fill-mode : none(默认值)/forwards(最后一帧的位置)/backwards(默认的开始的位置) /both(效果和forwards一样)
+
+css3效果：
+==>box-shadow:
+           语法   box-shadow:1px 2px 5px 5px rgba(255,100,210,.3);
+           第一个参数 x轴方向偏移 正->右  负 ->左
+           第二个参数 y轴方向偏移 正->下  负 - >上
+           第三个参数 模糊半径
+           第四个参数 扩展半径 正->阴影往外扩散 负->阴影往内收缩
+           第五个参数 阴影颜色
+
+==> ul :nth-child(1){/ *1.先找到所有的子元素,2.找第一个子元素 3.找到的这个第一个子元素的标记名是否为li*!/
+    ul li:nth-of-type(1){/ *指定了子元素的类型 1.先找到标记名是li的子元素,2.找第一个子元素*!/}
+
+==> background-size: 100% 100%; 背景图的宽高和元素的宽高一样大
+     background-size: 320px 50px;
+     background-size: contain; /!*按原始背景图比例收缩,整个背景图显示完整,但是可能不会铺满整个容器,出现空白区域
+     background-size: cover;/!*按原始背景图比例收缩,铺满整个容器,但是背景图可能显示不完整
+     cover缩放原理:
+                 容器宽/容器高<=背景图宽/背景图高  按照高来缩放
+                 缩放值 = 容器的高/背景图高
+                 容器宽/容器高>背景图宽/背景图高  按照宽来缩放
+                 缩放值 = 容器的宽/背景图宽

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+       /* div.ani{
+            width: 480px;
+            height: 320px;
+            overflow: hidden;
+            margin: 50px auto;
+
+        }
+        @keyframes animations {
+            0%{
+
+            }
+        }*/
+        .ani{
+            width:480px;
+            height:320px;
+            margin:50px auto;
+            overflow: hidden;
+            box-shadow:0 0 5px rgba(0,0,0,1);
+            background-size: cover;
+            background-position: center;
+            -webkit-animation-name: loops;
+            -webkit-animation-duration: 20s;
+            -webkit-animation-iteration-count: infinite;
+        }
+        @-webkit-keyframes loops {
+            0% {
+                background:url(img/bg0.jpg) no-repeat;
+            }
+            25% {
+                background:url(img/bg1.jpg) no-repeat;
+            }
+            50% {
+                background:url(img/bg2.jpg) no-repeat;
+            }
+            75% {
+                background:url(img/bg3.jpg) no-repeat;
+            }
+            100% {
+                background:url(img/bg4.jpg) no-repeat;
+            }
+        }
+
+    </style>
+</head>
+<body>
+<div class="ani"></div>
+</body>
+</html>

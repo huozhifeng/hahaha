@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        #tb{
+            width: 120px;
+            height: 300px;
+            background: url(images/tb1.png) no-repeat;
+            margin: 20px auto;
+            animation:move 1s 10 forwards 1s ;
+            transform-origin: top;
+        }
+        @keyframes move {
+            /*下面百分比可以理解成时间的百分比*/
+            /*
+            0%:动画执行时一瞬间变成的效果
+            */
+            0%{
+                transform: rotate(0deg);
+            }
+            25%{
+                transform: rotate(45deg);
+            }
+            75%{
+                transform: rotate(-45deg);
+            }
+            100%{
+                transform: rotate(0deg);
+            }
+
+        }
+    </style>
+</head>
+<body>
+<div id="tb">
+</div>
+</body>
+</html>

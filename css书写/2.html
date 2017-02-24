@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--
+     CSS 小技巧
+
+    1、 使用:not()去除导航上不需要的边框
+    2、 为body添加行高
+    3、 垂直居中任何元素
+    4、 逗号分离的列表
+    5、 使用负nth-child选择元素
+    6、 使用SVG图标
+    7、 文本显示优化
+    8、 在纯CSS幻灯片上使用max-height
+    9、 继承box-sizing
+    10、表格单元格等宽
+    11、使用Flexbox摆脱边界Hack
+    12、使用属性选择器选择空链接
+
+    一  使用:not()添加/去除导航上不需要的边框
+
+    添加边框…
+
+    /* 添加边框 */
+
+    .nav li {
+    border-right: 1px solid #666;
+    }
+
+    …然后去除最后一个元素的边框…
+
+    /* 移除边框 */
+
+    .nav li:last-child {
+    border-right: none;
+    }
+
+    …使用伪类 :not() 将样式只应用到你需要的元素上：
+
+    .nav li:not(:last-child) {
+    border-right: 1px solid #666;
+    }
+
+    当然，你可以使用.nav li + li 或者 .nav li:first-child ~ li， 但是使用 :not() 的意图特别清晰，CSS选择器按照人类描述它的方式定义边框。
+
+    二   为body添加行高
+
+    你不需要分别为每一个 <p>, <h*> 等元素添加行高，而是为body添加:
+
+        body {
+        line-height: 1;
+        }
+
+        这种方式下,文本元素可以很容易从body继承。
+
+       三     垂直居中任何元素
+
+        不，这不是黑魔法，你的确可以垂直居中任何元素：
+
+        html, body {
+        height: 100%;
+        margin: 0;
+        }
+
+        body {
+        -webkit-align-items: center;
+        -ms-flex-align: center;
+        align-items: center;
+        display: -webkit-flex;
+        display: flex;
+        }
+
+        想让其他元素居中？垂直，水平…任何东西，任何时间，任何位置？CSS-Tricks上有 一个不错的文章 来做到这一切。
+
+        注意：IE11上flexbox的一些 缺陷行为。
+
+        四   逗号分离的列表
+
+        让列表看起来更像一个真正的逗号分离列表：
+
+        ul > li:not(:last-child)::after {
+        content: ",";
+        }
+
+        使用伪类:not() ，这样最后一个元素不会被添加逗号。
+
+        五   使用负 nth-child 选择元素
+
+        在CSS使用负nth-child选择1到n的元素。
+
+        li {
+        display: none;
+        }
+
+        /* 选择1到3的元素并显示 */
+
+        li:nth-child(-n+3) {
+        display: block;
+        }
+
+        或者，你已经学习了一些关于 使用 :not()，尝试：
+
+        /* select items 1 through 3 and display them */
+
+        /* 选择1到3的元素并显示 */
+
+        li:not(:nth-child(-n+3)){
+        display: none;
+        }
+
+        这很简单。
+
+        六   使用SVG图标
+
+        没有理由不使用SVG图标：
+
+        .logo {
+        background: url("logo.svg");
+        }
+
+        SVG对所有分辨率类型具有良好的伸缩性，IE9以上的所有浏览器都支持。所以放弃.png，.jpg或gif-jif等任何文件。
+
+        注意：如果你使用SVG图标按钮，同时SVG加载失败，下面能帮助你保持可访问性：
+
+        .no-svg .icon-only:after {
+        content: attr(aria-label);
+        }
+
+        七   文本显示优化
+
+        有些字体在所有的设备上并不是最优显示，因此让设备浏览器来帮忙：
+
+        html {
+        -moz-osx-font-smoothing: grayscale;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+        }
+
+        注意：请使用optimizeLegibility。同时，IE/Edge不支持text-rendering。
+
+        八   在纯CSS实现的内容滑块上使用max-height
+
+        在纯CSS实现的内容滑块上使用max-height，同时设置overflow hidden：
+
+        .slider ul {
+        max-height: 0;
+        overlow: hidden;
+        }
+
+        .slider:hover ul {
+        max-height: 1000px;
+        transition: .3s ease; /* animate to max-height */
+        }
+
+        九   继承box-sizing
+
+        从html继承box-sizing：
+
+        html {
+        box-sizing: border-box;
+        }
+
+        , :before, *:after {
+        box-sizing: inherit;
+        }
+
+        这让插件或使用其他行为的组件能很容易地改变box-sizing。
+
+        十   表格单元格等宽
+
+        使用表格会很痛苦，因此使用table-layout：fixed来保持单元格相同的宽度：
+
+        .calendar {
+        table-layout: fixed;
+        }
+
+        十一  无痛表格布局。
+
+        使用Flexbox摆脱边界Hack
+
+        当使用列约束时，可以抛弃nth-，first- 和 last-child的hacks，而使用flexbox的space-between属性：
+
+        .list {
+        display: flex;
+        justify-content: space-between;
+        }
+
+        .list .person {
+        flex-basis: 23%;
+        }
+
+        现在列约束总是等间隔出现。
+
+        十二  使用属性选择器选择空链接
+
+        显示没有文本值但是 href 属性具有链接的 a 元素的链接：
+
+        a[href^="http"]:empty::before {
+        content: attr(href);
+        }
+
+        这样做很方便。
+
+        浏览器支持
+
+        这些技巧在当前版本的Chrome，Firefox， Safari， 以及Edge， 和IE11可以工作。
+-->
+
+</body>
+</html>
